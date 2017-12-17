@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
-public class CodeStyle {
+class CodeStyle {
 
 	private static final String KEY_CHARSET = "charset";
 	private static final String KEY_INDENT_SIZE = "indent_size";
@@ -45,27 +45,27 @@ public class CodeStyle {
 		this.trimTrailingWhiteSpaceStyle = trimTrailingWhiteSpaceStyle;
 	}
 
-	public CharsetStyle getCharsetStyle() {
+	CharsetStyle getCharsetStyle() {
 		return charsetStyle;
 	}
 
-	public IndentationSize getIndentationSize() {
+	IndentationSize getIndentationSize() {
 		return indentationSize;
 	}
 
-	public IndentationStyle getIndentationStyle() {
+	IndentationStyle getIndentationStyle() {
 		return indentationStyle;
 	}
 
-	public InsertFinalNewlineStyle getInsertFinalNewlineStyle() {
+	InsertFinalNewlineStyle getInsertFinalNewlineStyle() {
 		return insertFinalNewlineStyle;
 	}
 
-	public LineEndingStyle getLineEndingStyle() {
+	LineEndingStyle getLineEndingStyle() {
 		return lineEndingStyle;
 	}
 
-	public TrimTrailingWhiteSpaceStyle getTrimTrailingWhiteSpaceStyle() {
+	TrimTrailingWhiteSpaceStyle getTrimTrailingWhiteSpaceStyle() {
 		return trimTrailingWhiteSpaceStyle;
 	}
 
@@ -76,7 +76,7 @@ public class CodeStyle {
 	 * @return A Code style object.
 	 * @throws EditorConfigException If an {@code .editorconfig} file could not be parsed.
 	 */
-	public static CodeStyle forPath(Path file) throws EditorConfigException {
+	static CodeStyle forPath(Path file) throws EditorConfigException {
 		final List<EditorConfig.OutPair> properties = new EditorConfig().getProperties(file.toAbsolutePath().toString());
 
 		final CharsetStyle charsetStyle = CharsetStyle.parse(findByKey(properties, KEY_CHARSET));

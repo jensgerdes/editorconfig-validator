@@ -1,0 +1,4 @@
+This is a latin1 (ISO-8859-1) testfile with German umlauts.
+
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
+nopqrstuvwxyzäöüÄÖÜß

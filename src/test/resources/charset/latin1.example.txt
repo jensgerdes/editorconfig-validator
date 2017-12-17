@@ -1,0 +1,4 @@
+This is a latin1 (ISO-8859-1) testfile with all possible characters.
+
+:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklm
+nopqrstuvwxyz{|}~΅Ά£¤¥¦§¨©ª«¬®―°±²³΄µ¶·ΈΉΊ»Ό½ΎΏΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡÒΣΤΥΦΨΩΪΫάέήΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώÿ

@@ -16,3 +16,15 @@ continuation_indent_size = 8
 indent_style = tab
 indent_size = 4
 continuation_indent_size = 8
+
+[latin1.example.txt | latin1-germanUmlauts.example.txt]
+charset = latin1
+
+[utf16be.example.txt]
+charset = utf-16be
+
+[utf16le.example.txt]
+charset = utf-16le
+
+[utf8bom.example.txt]
+charset = utf-8-bom

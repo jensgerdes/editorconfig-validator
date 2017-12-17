@@ -1,5 +1,8 @@
 # Editorconfig Validator
 
+* Checks for
+  * Usage of correct Charset
+
 * Supports configuration inheritance.
 * Supported styles:
   * indent_size

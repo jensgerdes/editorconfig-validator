@@ -49,12 +49,19 @@ class CharsetStyleTest {
 	}
 
 	@Test
+	void whenUtf8BomGivenThenReturnUTF8Bom() {
+		final CharsetStyle style = CharsetStyle.parse("utf-8-bom");
+		assertThat(style, is(CharsetStyle.UTF8BOM));
+		assertThat(style.getCharset(), is(StandardCharsets.UTF_8));
+	}
+
+	@Test
 	void whenInvalidValueGivenThenThrowsIllegalArgumentException() {
 		final Executable parse = () -> CharsetStyle.parse(NON_EXISTING_CHARSET);
 		final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, parse);
 		assertThat(exception.getMessage(), is(equalTo(
 				String.format(
-						"`%s` is not a valid value for `%%s`. Valid values are (latin1, utf-8, utf-16be, utf-16le).",
+						"`%s` is not a valid value for `%%s`. Valid values are (latin1, utf-8, utf-8-bom, utf-16be, utf-16le).",
 						NON_EXISTING_CHARSET
 				)
 		)));
