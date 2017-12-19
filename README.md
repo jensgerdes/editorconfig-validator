@@ -1,5 +1,8 @@
-# Editorconfig Validator
+# *.editorconfig* Validator
+Java-Library to validate that a file complies with the rules defined in `.editorconfig`.
 
+For information on EditorConfig in general, see [their website](http://editorconfig.org/).
+ 
 * Checks for
   * Usage of correct Charset
 
