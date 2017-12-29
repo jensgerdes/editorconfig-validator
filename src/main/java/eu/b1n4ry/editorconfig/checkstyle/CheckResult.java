@@ -1,26 +1,62 @@
 package eu.b1n4ry.editorconfig.checkstyle;
 
-public class CheckResult {
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+
+public class CheckResult implements Serializable {
 
 	public static final CheckResult SUCCESS = new CheckResult();
-	private final boolean successful;
-	private final String errorMessage;
+	private final Collection<String> warnings;
+	private final Collection<String> violations;
+	private final Collection<Exception> errors;
 
-	private CheckResult() {
-		this.successful = true;
-		this.errorMessage = null;
-	}
-
-	public CheckResult(String errorMessage) {
-		this.successful = false;
-		this.errorMessage = errorMessage;
+	public CheckResult() {
+		violations = new LinkedList<>();
+		warnings = new LinkedList<>();
+		errors = new LinkedList<>();
 	}
 
 	public boolean isSuccessful() {
-		return successful;
+		return violations.isEmpty();
 	}
 
-	public String getErrorMessage() {
-		return errorMessage;
+	public Collection<String> getWarnings() {
+		return Collections.unmodifiableCollection(warnings);
+	}
+
+	public Collection<String> getViolations() {
+		return Collections.unmodifiableCollection(violations);
+	}
+
+	public Collection<Exception> getErrors() {
+		return Collections.unmodifiableCollection(errors);
+	}
+
+	public void addWarning(String message) {
+		warnings.add(message);
+	}
+
+	public void addViolation(String message) {
+		violations.add(message);
+	}
+
+	public void addError(Exception e) {
+		errors.add(e);
+	}
+
+	public static CheckResult withViolation(String message) {
+		final CheckResult result = new CheckResult();
+		result.addViolation(message);
+
+		return result;
+	}
+
+	public static CheckResult withError(Exception e) {
+		final CheckResult result = new CheckResult();
+		result.addError(e);
+
+		return result;
 	}
 }

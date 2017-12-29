@@ -1,4 +1,4 @@
-package eu.b1n4ry.editorconfig;
+package eu.b1n4ry.editorconfig.exception;
 
 public class ValidationException extends Exception {
 	public ValidationException(Exception cause) {

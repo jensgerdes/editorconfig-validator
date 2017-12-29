@@ -20,11 +20,33 @@ continuation_indent_size = 8
 [latin1.example.txt | latin1-germanUmlauts.example.txt]
 charset = latin1
 
-[utf16be.example.txt]
+[utf16be.example.txt | utf16beLFs.txt]
 charset = utf-16be
 
-[utf16le.example.txt]
+[utf16le.example.txt | utf16leLFs.txt]
 charset = utf-16le
 
 [utf8bom.example.txt]
 charset = utf-8-bom
+
+[asciiCRLFs.txt]
+end_of_line = crlf
+
+[utf16beCRLFs.txt]
+charset = utf-16be
+end_of_line = crlf
+
+[utf16leCRLFs.txt]
+charset = utf-16le
+end_of_line = crlf
+
+[asciiCRs.txt]
+end_of_line = cr
+
+[utf16beCRs.txt]
+charset = utf-16be
+end_of_line = cr
+
+[utf16leCRs.txt]
+charset = utf-16le
+end_of_line = cr

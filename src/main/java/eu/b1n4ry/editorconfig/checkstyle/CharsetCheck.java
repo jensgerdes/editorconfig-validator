@@ -1,6 +1,6 @@
 package eu.b1n4ry.editorconfig.checkstyle;
 
-import eu.b1n4ry.editorconfig.ValidationException;
+import eu.b1n4ry.editorconfig.CodeStyle;
 import eu.b1n4ry.editorconfig.codingstyle.CharsetStyle;
 import org.mozilla.universalchardet.UniversalDetector;
 import org.slf4j.Logger;
@@ -19,46 +19,46 @@ import java.util.Arrays;
 /**
  * Checks that a given text file uses the required Charset.
  */
-public class CharsetCheck implements ComplianceCheck {
+public class CharsetCheck implements Check {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CharsetCheck.class);
 	private static final String ERROR_OTHER_CHARSET = "File `%s` violates Rule `%s`. Found charset `%s` instead!";
 	private static final String ERROR_UNKNOWN_CHARSET = "File `%s` violates Rule `%s`. No charset determined.!";
 	private static final byte[] BYTE_ORDER_MARK = {(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
 
-	private final CharsetStyle style;
-	private final Path fileToCheck;
-
-	public CharsetCheck(CharsetStyle style, Path fileToCheck) {
-		this.style = style;
-		this.fileToCheck = fileToCheck;
-		LOG.trace("Initialized Check with CharsetStyle({}), File({}).", style, fileToCheck);
-	}
+	private CharsetStyle style;
+	private Path fileToCheck;
 
 	@Override
-	public CheckResult validate() throws ValidationException {
-		LOG.trace("Entering #validate().");
+	public CheckResult validate(Path fileToCheck) {
+		LOG.trace("Entering #validate({}).", fileToCheck);
+
+		this.fileToCheck = fileToCheck;
 
 		if (style == CharsetStyle.UNDEFINED) {
 			LOG.debug("CharsetStyle of File({}) is UNDEFINED. Skipping check...", fileToCheck);
 			return CheckResult.SUCCESS;
 		}
 
+		CheckResult result;
+
 		try {
 			final String detectedCharset = UniversalDetector.detectCharset(fileToCheck.toFile());
 
 			if (style.equalsCharset(detectedCharset)) {
 				LOG.debug("Detected Charset({}) complies with required CharsetStyle({}).", detectedCharset, style);
-				return (isUTF8(detectedCharset)) ? checkForUTF8BOM(detectedCharset) : CheckResult.SUCCESS;
+				result = (isUTF8(detectedCharset)) ? checkForUTF8BOM(detectedCharset) : CheckResult.SUCCESS;
 			} else if (detectedCharset == null) {
-				return tryToDecode();
+				result = tryToDecode();
 			} else {
-				return createError(detectedCharset);
+				result = createError(detectedCharset);
 			}
 		} catch (IOException e) {
 			LOG.info("Caught IOException during validation.", e);
-			throw new ValidationException(e);
+			result = CheckResult.withError(e);
 		}
+
+		return result;
 	}
 
 	private CheckResult tryToDecode() throws IOException {
@@ -118,13 +118,19 @@ public class CharsetCheck implements ComplianceCheck {
 		LOG.trace("Entering #createError().");
 		final String errorMessage = String.format(ERROR_OTHER_CHARSET, fileToCheck, style, detectedCharset);
 		LOG.debug(errorMessage);
-		return new CheckResult(errorMessage);
+		return CheckResult.withViolation(errorMessage);
 	}
 
 	private CheckResult createErrorForUnknownCharset() {
 		LOG.trace("Entering #createErrorForUnknownCharset().");
 		final String errorMessage = String.format(ERROR_UNKNOWN_CHARSET, fileToCheck, style);
 		LOG.debug(errorMessage);
-		return new CheckResult(errorMessage);
+		return CheckResult.withViolation(errorMessage);
+	}
+
+	@Override
+	public void setCodeStyle(CodeStyle codeStyle) {
+		LOG.trace("Entering #setCodeStyle({}).", codeStyle);
+		this.style = codeStyle.getCharsetStyle();
 	}
 }

@@ -1,0 +1,1 @@
+Line break file in UTF-8 (with only ASCII characters and LF).

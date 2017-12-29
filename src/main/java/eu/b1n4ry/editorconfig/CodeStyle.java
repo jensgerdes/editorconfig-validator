@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
-class CodeStyle {
+public class CodeStyle {
 
 	private static final String KEY_CHARSET = "charset";
 	private static final String KEY_INDENT_SIZE = "indent_size";
@@ -29,7 +29,7 @@ class CodeStyle {
 	private final LineEndingStyle lineEndingStyle;
 	private final TrimTrailingWhiteSpaceStyle trimTrailingWhiteSpaceStyle;
 
-	private CodeStyle(
+	protected CodeStyle(
 			CharsetStyle charsetStyle,
 			IndentationSize indentationSize,
 			IndentationStyle indentationStyle,
@@ -45,27 +45,27 @@ class CodeStyle {
 		this.trimTrailingWhiteSpaceStyle = trimTrailingWhiteSpaceStyle;
 	}
 
-	CharsetStyle getCharsetStyle() {
+	public CharsetStyle getCharsetStyle() {
 		return charsetStyle;
 	}
 
-	IndentationSize getIndentationSize() {
+	public IndentationSize getIndentationSize() {
 		return indentationSize;
 	}
 
-	IndentationStyle getIndentationStyle() {
+	public IndentationStyle getIndentationStyle() {
 		return indentationStyle;
 	}
 
-	InsertFinalNewlineStyle getInsertFinalNewlineStyle() {
+	public InsertFinalNewlineStyle getInsertFinalNewlineStyle() {
 		return insertFinalNewlineStyle;
 	}
 
-	LineEndingStyle getLineEndingStyle() {
+	public LineEndingStyle getLineEndingStyle() {
 		return lineEndingStyle;
 	}
 
-	TrimTrailingWhiteSpaceStyle getTrimTrailingWhiteSpaceStyle() {
+	public TrimTrailingWhiteSpaceStyle getTrimTrailingWhiteSpaceStyle() {
 		return trimTrailingWhiteSpaceStyle;
 	}
 
