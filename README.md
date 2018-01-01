@@ -1,5 +1,5 @@
 # *.editorconfig* Validator
-[![Build Status](https://api.travis-ci.org/jensgerdes/editorconfig-validator.svg?branch=master)](https://travis-ci.org/jensgerdes/editorconfig-validator) [![MIT License](http://img.shields.io/badge/license-MIT-green.svg)](https://github.com/jensgerdes/editorconfig-validator/blob/master/LICENSE)
+[![Build Status](https://api.travis-ci.org/jensgerdes/editorconfig-validator.svg?branch=master)](https://travis-ci.org/jensgerdes/editorconfig-validator) [![Coverage Status](https://coveralls.io/repos/github/jensgerdes/editorconfig-validator/badge.svg?branch=master)](https://coveralls.io/github/jensgerdes/editorconfig-validator?branch=master) [![MIT License](http://img.shields.io/badge/license-MIT-green.svg)](https://github.com/jensgerdes/editorconfig-validator/blob/master/LICENSE)
 
 Java-Library to validate that a file complies with the rules defined in `.editorconfig`.
 Please note, that this project is under heavy development and is currently **NOT READY FOR PRODUCTION**!
