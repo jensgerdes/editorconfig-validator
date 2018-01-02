@@ -95,8 +95,7 @@ public class FileValidator {
 			throw new CheckInstantiationException(e);
 		}
 
-		new FileValidator(genericChecks, charBasedChecks, filePath, codeStyle)
-				.validate();
+		new FileValidator(genericChecks, charBasedChecks, filePath, codeStyle).validate();
 	}
 
 	private FileValidator(

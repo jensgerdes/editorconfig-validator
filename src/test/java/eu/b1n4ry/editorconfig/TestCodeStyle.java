@@ -32,6 +32,16 @@ public class TestCodeStyle extends CodeStyle {
 			return this;
 		}
 
+		public Builder withInsertFinalNewlineStyle(InsertFinalNewlineStyle insertFinalNewlineStyle) {
+			this.insertFinalNewlineStyle = insertFinalNewlineStyle;
+			return this;
+		}
+
+		public Builder withLineEndingStyle(LineEndingStyle lineEndingStyle) {
+			this.lineEndingStyle = lineEndingStyle;
+			return this;
+		}
+
 		public CodeStyle build() {
 
 			return new TestCodeStyle(
