@@ -1,10 +1,10 @@
 package eu.b1n4ry.editorconfig;
 
-import eu.b1n4ry.editorconfig.codingstyle.CharsetStyle;
-import eu.b1n4ry.editorconfig.codingstyle.IndentationStyle;
-import eu.b1n4ry.editorconfig.codingstyle.InsertFinalNewlineStyle;
-import eu.b1n4ry.editorconfig.codingstyle.LineEndingStyle;
-import eu.b1n4ry.editorconfig.codingstyle.TrimTrailingWhiteSpaceStyle;
+import eu.b1n4ry.editorconfig.style.CharsetStyle;
+import eu.b1n4ry.editorconfig.style.IndentationStyle;
+import eu.b1n4ry.editorconfig.style.InsertFinalNewlineStyle;
+import eu.b1n4ry.editorconfig.style.LineEndingStyle;
+import eu.b1n4ry.editorconfig.style.TrimTrailingWhiteSpaceStyle;
 import org.editorconfig.core.EditorConfigException;
 import org.editorconfig.core.ParsingException;
 import org.junit.jupiter.api.Test;

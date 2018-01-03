@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Exception thrown when a problem with the instantiation of the {@link eu.b1n4ry.editorconfig.checkstyle.Check} classes
+ * Exception thrown when a problem with the instantiation of the {@link eu.b1n4ry.editorconfig.check.Check} classes
  * occured.
  */
 public class CheckInstantiationException extends RuntimeException {

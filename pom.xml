@@ -60,6 +60,13 @@
 			<version>0.12.1.Final</version>
 		</dependency>
 
+		<!-- Charset and MimeType detection library -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>1.17</version>
+		</dependency>
+
 		<!-- Charset detection library -->
 		<dependency>
 			<groupId>com.github.albfernandez</groupId>

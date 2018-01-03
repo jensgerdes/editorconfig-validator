@@ -1,6 +1,6 @@
 package eu.b1n4ry.editorconfig;
 
-import eu.b1n4ry.editorconfig.checkstyle.CheckResult;
+import eu.b1n4ry.editorconfig.check.CheckResult;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;

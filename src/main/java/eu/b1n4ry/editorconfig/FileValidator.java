@@ -1,8 +1,8 @@
 package eu.b1n4ry.editorconfig;
 
-import eu.b1n4ry.editorconfig.checkstyle.CharacterBasedCheck;
-import eu.b1n4ry.editorconfig.checkstyle.CharsetCheck;
-import eu.b1n4ry.editorconfig.checkstyle.Check;
+import eu.b1n4ry.editorconfig.check.CharacterBasedCheck;
+import eu.b1n4ry.editorconfig.check.CharsetCheck;
+import eu.b1n4ry.editorconfig.check.Check;
 import eu.b1n4ry.editorconfig.exception.CheckInstantiationException;
 import org.editorconfig.core.EditorConfigException;
 import org.slf4j.Logger;

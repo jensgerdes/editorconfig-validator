@@ -1,8 +1,8 @@
 package eu.b1n4ry.editorconfig;
 
-import eu.b1n4ry.editorconfig.checkstyle.CharacterBasedCheck;
-import eu.b1n4ry.editorconfig.checkstyle.Check;
-import eu.b1n4ry.editorconfig.checkstyle.CheckResult;
+import eu.b1n4ry.editorconfig.check.CharacterBasedCheck;
+import eu.b1n4ry.editorconfig.check.Check;
+import eu.b1n4ry.editorconfig.check.CheckResult;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * Testing utility that sets all required sources for a given Check and if it is a {@link eu.b1n4ry.editorconfig.checkstyle.CharacterBasedCheck}
+ * Testing utility that sets all required sources for a given Check and if it is a {@link eu.b1n4ry.editorconfig.check.CharacterBasedCheck}
  * feeds the check with all characters from a given source.
  */
 public class TestValidator {
