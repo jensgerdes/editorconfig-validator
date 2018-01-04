@@ -9,16 +9,23 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static eu.b1n4ry.editorconfig.CheckResultMatchers.hasErrors;
 import static eu.b1n4ry.editorconfig.CheckResultMatchers.successful;
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 class CharsetCheckTest {
 
 	private static final Path TEST_DIR = Paths.get("src/test/resources/charset");
+	private static final String FILEPREFIX_UTF_16_LE = "utf16le";
+	private static final String FILEPREFIX_UTF_16_BE = "utf16be";
+	private static final String FILEPREFIX_UTF_8_BOM = "utf8bom";
+	private static final String FILEPREFIX_UTF_8 = "utf8";
+	private static final String FILEPREFIX_LATIN_1 = "latin1";
+	private static final String FILEPREFIX_LATIN1_GERMAN_UMLAUTS = "latin1-germanUmlauts";
+	private static final String FILEPREFIX_ASCII = "ascii";
+	private static final String FILEPREFIX_NONEXISTING = "nonexisting";
 
 	/*
 	 * SUCCESSFUL CHECKS
@@ -26,49 +33,49 @@ class CharsetCheckTest {
 
 	@Test
 	void whenUTF8FileGivenAndUTF8ExpectedReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.UTF8, "utf8");
+		validateAndExpectSuccess(CharsetStyle.UTF8, FILEPREFIX_UTF_8);
 	}
 
 	@Test
 	void whenUTF8BOMFileGivenAndUTF8BOMExpectedReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.UTF8BOM, "utf8bom");
+		validateAndExpectSuccess(CharsetStyle.UTF8BOM, FILEPREFIX_UTF_8_BOM);
 	}
 
 	@Test
 	void whenUTF16BEFileGivenAndUTF16BEExptectedThenReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.UTF16BE, "utf16be");
+		validateAndExpectSuccess(CharsetStyle.UTF16BE, FILEPREFIX_UTF_16_BE);
 	}
 
 	@Test
 	void whenUTF16LEFileGivenAndUTF16LEExptectedThenReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.UTF16LE, "utf16le");
+		validateAndExpectSuccess(CharsetStyle.UTF16LE, FILEPREFIX_UTF_16_LE);
 	}
 
 	@Test
 	void whenLatin1FileGivenAndLatin1ExpectedThenReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.LATIN1, "latin1");
-		validateAndExpectSuccess(CharsetStyle.LATIN1, "latin1-germanUmlauts");
+		validateAndExpectSuccess(CharsetStyle.LATIN1, FILEPREFIX_LATIN_1);
+		validateAndExpectSuccess(CharsetStyle.LATIN1, FILEPREFIX_LATIN1_GERMAN_UMLAUTS);
 	}
 
 	@Test
 	void whenASCIIFileGivenAndLatin1ExpectedThenReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.LATIN1, "ascii");
+		validateAndExpectSuccess(CharsetStyle.LATIN1, FILEPREFIX_ASCII);
 	}
 
 	@Test
 	void whenASCIIFileGivenAndUTF8ExpectedThenReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.UTF8, "ascii");
+		validateAndExpectSuccess(CharsetStyle.UTF8, FILEPREFIX_ASCII);
 	}
 
 	@Test
 	void whenAnythingGivenAndUndefinedExpectedThenReturnSuccess() {
-		validateAndExpectSuccess(CharsetStyle.UNDEFINED, "ascii");
-		validateAndExpectSuccess(CharsetStyle.UNDEFINED, "latin1");
-		validateAndExpectSuccess(CharsetStyle.UNDEFINED, "latin1-germanUmlauts");
-		validateAndExpectSuccess(CharsetStyle.UNDEFINED, "utf8");
-		validateAndExpectSuccess(CharsetStyle.UNDEFINED, "utf8bom");
-		validateAndExpectSuccess(CharsetStyle.UNDEFINED, "utf16be");
-		validateAndExpectSuccess(CharsetStyle.UNDEFINED, "utf16le");
+		validateAndExpectSuccess(CharsetStyle.UNDEFINED, FILEPREFIX_ASCII);
+		validateAndExpectSuccess(CharsetStyle.UNDEFINED, FILEPREFIX_LATIN_1);
+		validateAndExpectSuccess(CharsetStyle.UNDEFINED, FILEPREFIX_LATIN1_GERMAN_UMLAUTS);
+		validateAndExpectSuccess(CharsetStyle.UNDEFINED, FILEPREFIX_UTF_8);
+		validateAndExpectSuccess(CharsetStyle.UNDEFINED, FILEPREFIX_UTF_8_BOM);
+		validateAndExpectSuccess(CharsetStyle.UNDEFINED, FILEPREFIX_UTF_16_BE);
+		validateAndExpectSuccess(CharsetStyle.UNDEFINED, FILEPREFIX_UTF_16_LE);
 	}
 
 	/*
@@ -77,116 +84,122 @@ class CharsetCheckTest {
 
 	@Test
 	void whenASCIIGivenAndUTF16BEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16BE, "ascii");
+		validateAndExpectFail(CharsetStyle.UTF16BE, FILEPREFIX_ASCII);
 	}
 
 	@Test
 	void whenASCIIGivenAndUTF16LEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16LE, "ascii");
+		validateAndExpectFail(CharsetStyle.UTF16LE, FILEPREFIX_ASCII);
 	}
 
 	@Test
 	void whenLatin1GivenAndUTF8ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8, "latin1");
-		validateAndExpectFail(CharsetStyle.UTF8, "latin1-germanUmlauts");
+		validateAndExpectFail(CharsetStyle.UTF8, FILEPREFIX_LATIN_1);
+		validateAndExpectFail(CharsetStyle.UTF8, FILEPREFIX_LATIN1_GERMAN_UMLAUTS);
 	}
 
 	@Test
 	void whenLatin1GivenAndUTF8BOMExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8BOM, "latin1");
-		validateAndExpectFail(CharsetStyle.UTF8BOM, "latin1-germanUmlauts");
+		validateAndExpectFail(CharsetStyle.UTF8BOM, FILEPREFIX_LATIN_1);
+		validateAndExpectFail(CharsetStyle.UTF8BOM, FILEPREFIX_LATIN1_GERMAN_UMLAUTS);
 	}
 
 	@Test
 	void whenLatin1GivenAndUTF16BEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16BE, "latin1");
-		validateAndExpectFail(CharsetStyle.UTF16BE, "latin1-germanUmlauts");
+		validateAndExpectFail(CharsetStyle.UTF16BE, FILEPREFIX_LATIN_1);
+		validateAndExpectFail(CharsetStyle.UTF16BE, FILEPREFIX_LATIN1_GERMAN_UMLAUTS);
 	}
 
 	@Test
 	void whenLatin1GivenAndUTF16LEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16LE, "latin1");
-		validateAndExpectFail(CharsetStyle.UTF16LE, "latin1-germanUmlauts");
+		validateAndExpectFail(CharsetStyle.UTF16LE, FILEPREFIX_LATIN_1);
+		validateAndExpectFail(CharsetStyle.UTF16LE, FILEPREFIX_LATIN1_GERMAN_UMLAUTS);
 	}
 
 	@Test
 	void whenUTF8GivenAndLatin1ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.LATIN1, "utf8");
+		validateAndExpectFail(CharsetStyle.LATIN1, FILEPREFIX_UTF_8);
 	}
 
 	@Test
 	void whenUTF8GivenAndUTF8BOMExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8BOM, "utf8");
+		validateAndExpectFail(CharsetStyle.UTF8BOM, FILEPREFIX_UTF_8);
 	}
 
 	@Test
 	void whenUTF8GivenAndUTF16BEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16BE, "utf8");
+		validateAndExpectFail(CharsetStyle.UTF16BE, FILEPREFIX_UTF_8);
 	}
 
 	@Test
 	void whenUTF8GivenAndUTF16LEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16LE, "utf8");
+		validateAndExpectFail(CharsetStyle.UTF16LE, FILEPREFIX_UTF_8);
 	}
 
 	@Test
 	void whenUTF8BOMGivenAndLatin1ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.LATIN1, "utf8bom");
+		validateAndExpectFail(CharsetStyle.LATIN1, FILEPREFIX_UTF_8_BOM);
 	}
 
 	@Test
 	void whenUTF8BOMGivenAndUTF8ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8, "utf8bom");
+		validateAndExpectFail(CharsetStyle.UTF8, FILEPREFIX_UTF_8_BOM);
 	}
 
 	@Test
 	void whenUTF8BOMGivenAndUTF16BEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16BE, "utf8bom");
+		validateAndExpectFail(CharsetStyle.UTF16BE, FILEPREFIX_UTF_8_BOM);
 	}
 
 	@Test
 	void whenUTF8BOMGivenAndUTF16LEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16LE, "utf8bom");
+		validateAndExpectFail(CharsetStyle.UTF16LE, FILEPREFIX_UTF_8_BOM);
 	}
 
 	@Test
 	void whenUTF16BEGivenAndLatin1ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.LATIN1, "utf16be");
+		validateAndExpectFail(CharsetStyle.LATIN1, FILEPREFIX_UTF_16_BE);
 	}
 
 	@Test
 	void whenUTF16BEGivenAndUTF8ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8, "utf16be");
+		validateAndExpectFail(CharsetStyle.UTF8, FILEPREFIX_UTF_16_BE);
 	}
 
 	@Test
 	void whenUTF16BEGivenAndUTF8BOMExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8BOM, "utf16be");
+		validateAndExpectFail(CharsetStyle.UTF8BOM, FILEPREFIX_UTF_16_BE);
 	}
 
 	@Test
 	void whenUTF16BEGivenAndUTF16LEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16LE, "utf16be");
+		validateAndExpectFail(CharsetStyle.UTF16LE, FILEPREFIX_UTF_16_BE);
 	}
 
 	@Test
 	void whenUTF16LEGivenAndLatin1ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.LATIN1, "utf16le");
+		validateAndExpectFail(CharsetStyle.LATIN1, FILEPREFIX_UTF_16_LE);
 	}
 
 	@Test
 	void whenUTF16LEGivenAndUTF8ExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8, "utf16le");
+		validateAndExpectFail(CharsetStyle.UTF8, FILEPREFIX_UTF_16_LE);
 	}
 
 	@Test
 	void whenUTF16LEGivenAndUTF8BOMExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF8BOM, "utf16le");
+		validateAndExpectFail(CharsetStyle.UTF8BOM, FILEPREFIX_UTF_16_LE);
 	}
 
 	@Test
 	void whenUTF16LEGivenAndUTF16BEExpectedThenFail() {
-		validateAndExpectFail(CharsetStyle.UTF16BE, "utf16le");
+		validateAndExpectFail(CharsetStyle.UTF16BE, FILEPREFIX_UTF_16_LE);
+	}
+
+	@Test
+	void whenExceptionOccursErrorIsReturned() {
+		final CheckResult result = validate(CharsetStyle.UTF8, FILEPREFIX_NONEXISTING);
+		assertThat(result, hasErrors(1));
 	}
 
 	private void validateAndExpectFail(CharsetStyle style, String charsetName) {

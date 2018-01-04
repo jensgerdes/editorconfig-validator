@@ -19,7 +19,7 @@ public class CheckResult implements Serializable {
 	}
 
 	public boolean isSuccessful() {
-		return violations.isEmpty();
+		return violations.isEmpty() && errors.isEmpty();
 	}
 
 	public Collection<String> getWarnings() {
