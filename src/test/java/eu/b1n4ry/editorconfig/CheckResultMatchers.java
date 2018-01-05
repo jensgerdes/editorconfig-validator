@@ -7,6 +7,15 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 public class CheckResultMatchers {
 
+	public static Matcher<CheckResult> hasViolations(Integer expectedViolations) {
+		return new CheckResultViolationMatcher(expectedViolations);
+	}
+
+	public static Matcher<CheckResult> hasViolations() {
+		return new CheckResultViolationMatcher();
+	}
+
+
 	public static Matcher<CheckResult> hasErrors(Integer expectedErrors) {
 		return new CheckResultErrorMatcher(expectedErrors);
 	}
@@ -39,15 +48,54 @@ public class CheckResultMatchers {
 		}
 	}
 
+	private static class CheckResultViolationMatcher extends TypeSafeDiagnosingMatcher<CheckResult> {
+
+		private final Integer expectedViolations;
+
+		public CheckResultViolationMatcher() {
+			expectedViolations = null;
+		}
+
+		public CheckResultViolationMatcher(Integer expectedErrors) {
+			this.expectedViolations = expectedErrors;
+		}
+
+		@Override
+		protected boolean matchesSafely(CheckResult checkResult, Description mismatchDescription) {
+			mismatchDescription.appendText(" was getErrors().size() => ")
+					.appendValue(checkResult.getErrors().size())
+					.appendText("; getViolations().size() => ")
+					.appendValue(checkResult.getViolations().size())
+					.appendText("; isSuccessful() => ")
+					.appendValue(checkResult.isSuccessful());
+
+			final boolean violationComparison = (expectedViolations == null) ? !checkResult.getViolations().isEmpty()
+					: checkResult.getViolations().size() == expectedViolations;
+
+			return !checkResult.isSuccessful() && violationComparison;
+		}
+
+		@Override
+		public void describeTo(Description description) {
+			if (expectedViolations == null) {
+				description.appendText("getViolations().isEmpty() => <false>");
+			} else {
+				description.appendText("getViolations().size() => ").appendValue(expectedViolations);
+			}
+
+			description.appendText("; isSuccessful() => <false>");
+		}
+	}
+
 	private static class CheckResultErrorMatcher extends TypeSafeDiagnosingMatcher<CheckResult> {
 
 		private final Integer expectedErrors;
 
-		public CheckResultErrorMatcher() {
+		CheckResultErrorMatcher() {
 			expectedErrors = null;
 		}
 
-		public CheckResultErrorMatcher(Integer expectedErrors) {
+		CheckResultErrorMatcher(Integer expectedErrors) {
 			this.expectedErrors = expectedErrors;
 		}
 

@@ -35,6 +35,9 @@ public class CrLfCheck implements LineEndingHelper {
 			if (CR == character) {
 				LOG.debug("Found \\r, expecting \\n to be the next char.");
 				expectLf = true;
+			} else if (LF == character) {
+				LOG.debug("Found \\n, without preceeding \\r.");
+				foundNonCompliantCharacter = true;
 			}
 		}
 	}
@@ -43,7 +46,7 @@ public class CrLfCheck implements LineEndingHelper {
 	public CheckResult validate(Path fileToCheck) {
 		LOG.trace("Entering #validate({}).", fileToCheck);
 
-		if (foundNonCompliantCharacter) {
+		if (expectLf || foundNonCompliantCharacter) {
 			return CheckResult.withViolation(String.format(ERROR, fileToCheck));
 		} else return CheckResult.SUCCESS;
 	}

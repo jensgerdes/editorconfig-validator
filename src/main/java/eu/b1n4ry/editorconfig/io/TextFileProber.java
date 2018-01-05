@@ -14,9 +14,9 @@ import java.util.Set;
 /**
  * Checks if a given file is a text file.
  */
-public class TextfileProber {
+public class TextFileProber {
 
-	private static final Logger LOG = LoggerFactory.getLogger(TextfileProber.class);
+	private static final Logger LOG = LoggerFactory.getLogger(TextFileProber.class);
 	private static final String MIMETYPE_TEXT_PREFIX = "text/";
 	private static final Set<String> MIMETYPE_WHITELIST = new HashSet<>(
 			Arrays.asList(

@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class TextfileProberTest {
+class TextFileProberTest {
 
 	private static final Path TEST_DIR = Paths.get("src/test/resources/charset");
 
@@ -40,7 +40,7 @@ class TextfileProberTest {
 			protected boolean matchesSafely(Path path, Description mismatchDescription) {
 				final boolean isTextfile;
 				try {
-					isTextfile = TextfileProber.isTextfile(path);
+					isTextfile = TextFileProber.isTextfile(path);
 				} catch (IOException e) {
 					throw new UncheckedIOException(e);
 				}

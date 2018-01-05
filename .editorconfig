@@ -50,3 +50,6 @@ end_of_line = cr
 [utf16leCRs.txt]
 charset = utf-16le
 end_of_line = cr
+
+[empty.example.txt]
+insert_final_newline = false
