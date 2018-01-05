@@ -36,7 +36,7 @@ public class CrLfCheck implements LineEndingHelper {
 				LOG.debug("Found \\r, expecting \\n to be the next char.");
 				expectLf = true;
 			} else if (LF == character) {
-				LOG.debug("Found \\n, without preceeding \\r.");
+				LOG.debug("Found \\n, without preceding \\r.");
 				foundNonCompliantCharacter = true;
 			}
 		}
