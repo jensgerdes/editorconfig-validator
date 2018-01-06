@@ -1,0 +1,3 @@
+# .editorconfig Settings for the test resources.
+[*NoFinalNewline.txt]
+insert_final_newline = false

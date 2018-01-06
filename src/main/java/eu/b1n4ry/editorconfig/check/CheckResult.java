@@ -34,28 +34,16 @@ public class CheckResult implements Serializable {
 		return Collections.unmodifiableCollection(errors);
 	}
 
-	public void addWarning(String message) {
-		warnings.add(message);
-	}
-
-	public void addViolation(String message) {
-		violations.add(message);
-	}
-
-	public void addError(Exception e) {
-		errors.add(e);
-	}
-
 	public static CheckResult withViolation(String message) {
 		final CheckResult result = new CheckResult();
-		result.addViolation(message);
+		result.violations.add(message);
 
 		return result;
 	}
 
 	public static CheckResult withError(Exception e) {
 		final CheckResult result = new CheckResult();
-		result.addError(e);
+		result.errors.add(e);
 
 		return result;
 	}

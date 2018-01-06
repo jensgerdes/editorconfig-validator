@@ -2,7 +2,6 @@ package eu.b1n4ry.editorconfig.check;
 
 import eu.b1n4ry.editorconfig.CodeStyle;
 import eu.b1n4ry.editorconfig.style.InsertFinalNewlineStyle;
-import eu.b1n4ry.editorconfig.style.LineEndingStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +19,6 @@ public class FinalNewLineCheck implements CharacterBasedCheck {
 	private static final char LF = '\n';
 
 	private char lastChar;
-	private LineEndingStyle lineEndingStyle;
-	private Path fileToCheck;
 	private InsertFinalNewlineStyle finalNewlineStyle;
 
 	@Override
@@ -33,7 +30,6 @@ public class FinalNewLineCheck implements CharacterBasedCheck {
 	@Override
 	public void setCodeStyle(CodeStyle codeStyle) {
 		LOG.trace("Entering #setCodeStyle({}).", codeStyle);
-		this.lineEndingStyle = codeStyle.getLineEndingStyle();
 		this.finalNewlineStyle = codeStyle.getInsertFinalNewlineStyle();
 	}
 
@@ -46,32 +42,11 @@ public class FinalNewLineCheck implements CharacterBasedCheck {
 			return CheckResult.SUCCESS;
 		}
 
-		this.fileToCheck = fileToCheck;
-
-		final CheckResult result;
-
-		switch (lineEndingStyle) {
-			case LF:
-			case CRLF:
-				// do lf
-				result = expectLastCharToBe(LF);
-				break;
-			case CR:
-				// do cr
-				result = expectLastCharToBe(CR);
-				break;
-			default:
-				result = CheckResult.SUCCESS;
-		}
-
-		return result;
-	}
-
-	private CheckResult expectLastCharToBe(char expectedLastChar) {
-		if (expectedLastChar == lastChar) {
+		if (lastChar == CR || lastChar == LF) {
 			return CheckResult.SUCCESS;
 		}
 
+		LOG.debug("File({}) is missing a final new line.", fileToCheck);
 		return CheckResult.withViolation(String.format(ERROR_MESSAGE, fileToCheck));
 	}
 }
