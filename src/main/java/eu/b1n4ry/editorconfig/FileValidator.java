@@ -1,16 +1,5 @@
 package eu.b1n4ry.editorconfig;
 
-import eu.b1n4ry.editorconfig.check.CharacterBasedCheck;
-import eu.b1n4ry.editorconfig.check.CharsetCheck;
-import eu.b1n4ry.editorconfig.check.Check;
-import eu.b1n4ry.editorconfig.exception.CheckInstantiationException;
-import org.editorconfig.core.EditorConfigException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -18,6 +7,15 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import eu.b1n4ry.editorconfig.check.CharacterBasedCheck;
+import eu.b1n4ry.editorconfig.check.CharsetCheck;
+import eu.b1n4ry.editorconfig.check.Check;
+import eu.b1n4ry.editorconfig.exception.CheckInstantiationException;
+import eu.b1n4ry.editorconfig.io.CharsetDetectingReader;
+import org.editorconfig.core.EditorConfigException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The FileValidator checks Files for compliance with the rules defined in a corresponding {@code .editorconfig} file.
@@ -114,7 +112,7 @@ public class FileValidator {
 		try {
 			feedCharacterBasedChecks();
 			validateAll();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -125,13 +123,10 @@ public class FileValidator {
 				.collect(Collectors.toList());
 	}
 
-	private void feedCharacterBasedChecks() throws IOException {
-		final Charset charset = codeStyle.getCharsetStyle().getCharset();
-		try (final Reader reader = Files.newBufferedReader(fileToCheck, charset)) {
-			int value;
-
-			while ((value = reader.read()) > -1) {
-				final char character = (char) value;
+	private void feedCharacterBasedChecks() throws Exception {
+		try (final CharsetDetectingReader reader = new CharsetDetectingReader(fileToCheck, codeStyle.getCharsetStyle())) {
+			while (reader.hasNext()) {
+				final char character = reader.read();
 				characterBasedChecks.forEach(check -> check.readCharacter(character));
 			}
 		}
