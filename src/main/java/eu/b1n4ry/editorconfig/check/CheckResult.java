@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * The result of of a {@link Check}.
+ */
 public class CheckResult implements Serializable {
 
 	public static final CheckResult SUCCESS = new CheckResult();

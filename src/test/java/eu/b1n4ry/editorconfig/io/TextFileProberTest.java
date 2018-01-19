@@ -1,14 +1,14 @@
 package eu.b1n4ry.editorconfig.io;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -32,6 +32,11 @@ class TextFileProberTest {
 	@Test
 	void whenJarGivenThenReturnFalse() {
 		assertThat(Paths.get(".mvn/wrapper/maven-wrapper.jar"), is(not(textfile())));
+	}
+
+	@Test
+	void whenPngGivenThenReturnFalse() {
+		assertThat(TEST_DIR.getParent().resolve("example.png"), is(not(textfile())));
 	}
 
 	private Matcher<Path> textfile() {

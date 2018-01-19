@@ -1,10 +1,10 @@
 package eu.b1n4ry.editorconfig.io;
 
-import eu.b1n4ry.editorconfig.style.CharsetStyle;
-import org.junit.jupiter.api.Test;
-
 import java.nio.file.Paths;
 import java.util.Arrays;
+
+import eu.b1n4ry.editorconfig.style.CharsetStyle;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,6 +17,7 @@ class CharsetProberTest {
 		assertThat(CharsetProber.canReadFile(Paths.get(".mvn/wrapper/maven-wrapper.jar"), CharsetStyle.UTF8), is(false));
 		assertThat(CharsetProber.canReadFile(Paths.get(".mvn/wrapper/maven-wrapper.jar"), CharsetStyle.UTF16BE), is(false));
 		assertThat(CharsetProber.canReadFile(Paths.get(".mvn/wrapper/maven-wrapper.jar"), CharsetStyle.UTF16LE), is(false));
+		assertThat(CharsetProber.canReadFile(Paths.get("nonExisting/file"), CharsetStyle.UTF8), is(false));
 	}
 
 	/**
