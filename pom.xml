@@ -17,7 +17,7 @@
 		<developer>
 			<id>jensgerdes</id>
 			<name>Jens Gerdes</name>
-			<email>jgerdes@b1n4ry.eu</email>
+			<email>jgerdes@b1n4ry.io</email>
 			<timezone>Europe/Berlin</timezone>
 		</developer>
 	</developers>
@@ -44,7 +44,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<junit.jupiter.version>5.0.2</junit.jupiter.version>
+		<junit.jupiter.version>5.0.3</junit.jupiter.version>
 		<junit.platform.version>1.0.2</junit.platform.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -169,7 +169,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.9</version>
+				<version>0.8.0</version>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
