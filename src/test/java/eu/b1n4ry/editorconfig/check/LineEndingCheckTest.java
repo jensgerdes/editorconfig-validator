@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static eu.b1n4ry.editorconfig.CheckResultMatchers.hasViolations;
-import static eu.b1n4ry.editorconfig.CheckResultMatchers.successful;
+import static eu.b1n4ry.editorconfig.CheckResultMatcher.hasViolations;
+import static eu.b1n4ry.editorconfig.CheckResultMatcher.successful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;

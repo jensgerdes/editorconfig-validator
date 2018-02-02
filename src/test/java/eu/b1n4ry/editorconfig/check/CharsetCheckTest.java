@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static eu.b1n4ry.editorconfig.CheckResultMatchers.hasErrors;
-import static eu.b1n4ry.editorconfig.CheckResultMatchers.successful;
+import static eu.b1n4ry.editorconfig.CheckResultMatcher.hasErrors;
+import static eu.b1n4ry.editorconfig.CheckResultMatcher.successful;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;

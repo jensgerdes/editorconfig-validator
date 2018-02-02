@@ -5,7 +5,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-public class CheckResultMatchers {
+public class CheckResultMatcher {
 
 	public static Matcher<CheckResult> hasViolations(Integer expectedViolations) {
 		return new CheckResultViolationMatcher(expectedViolations);
@@ -52,11 +52,11 @@ public class CheckResultMatchers {
 
 		private final Integer expectedViolations;
 
-		public CheckResultViolationMatcher() {
+		CheckResultViolationMatcher() {
 			expectedViolations = null;
 		}
 
-		public CheckResultViolationMatcher(Integer expectedErrors) {
+		CheckResultViolationMatcher(Integer expectedErrors) {
 			this.expectedViolations = expectedErrors;
 		}
 

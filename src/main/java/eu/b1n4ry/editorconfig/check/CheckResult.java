@@ -50,4 +50,26 @@ public class CheckResult implements Serializable {
 
 		return result;
 	}
+
+	/**
+	 * Merges two CheckResults into one by creating a new CheckResult that contains all Warnings, Violations and Errors.
+	 *
+	 * @param resultA The first CheckResult.
+	 * @param resultB The second CheckResult.
+	 * @return A new CheckResult that combines the given information.
+	 */
+	public static CheckResult merge(CheckResult resultA, CheckResult resultB) {
+		final CheckResult mergedResult = new CheckResult();
+
+		mergedResult.errors.addAll(resultA.errors);
+		mergedResult.errors.addAll(resultB.errors);
+
+		mergedResult.violations.addAll(resultA.violations);
+		mergedResult.violations.addAll(resultB.violations);
+
+		mergedResult.warnings.addAll(resultA.warnings);
+		mergedResult.warnings.addAll(resultB.warnings);
+
+		return mergedResult;
+	}
 }

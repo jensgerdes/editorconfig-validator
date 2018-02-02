@@ -1,0 +1,5 @@
+   Hi, this is
+a space-indented
+        file with
+      varying
+           spaces!

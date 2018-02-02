@@ -1,5 +1,9 @@
 package eu.b1n4ry.editorconfig;
 
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Objects;
+
 import eu.b1n4ry.editorconfig.style.CharsetStyle;
 import eu.b1n4ry.editorconfig.style.IndentationSize;
 import eu.b1n4ry.editorconfig.style.IndentationStyle;
@@ -9,10 +13,6 @@ import eu.b1n4ry.editorconfig.style.TrimTrailingWhiteSpaceStyle;
 import org.editorconfig.core.EditorConfig;
 import org.editorconfig.core.EditorConfigException;
 
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Objects;
-
 public class CodeStyle {
 
 	private static final String KEY_CHARSET = "charset";
@@ -21,6 +21,7 @@ public class CodeStyle {
 	private static final String KEY_INSERT_FINAL_NEWLINE = "insert_final_newline";
 	private static final String KEY_END_OF_LINE = "end_of_line";
 	private static final String KEY_TRIM_TRAILING_WHITESPACE = "trim_trailing_whitespace";
+	private static final String KEY_TAB_WIDTH = "tab_width";
 
 	private final CharsetStyle charsetStyle;
 	private final IndentationSize indentationSize;
@@ -80,7 +81,10 @@ public class CodeStyle {
 		final List<EditorConfig.OutPair> properties = new EditorConfig().getProperties(file.toAbsolutePath().toString());
 
 		final CharsetStyle charsetStyle = CharsetStyle.parse(findByKey(properties, KEY_CHARSET));
-		final IndentationSize indentationSize = IndentationSize.parse(findByKey(properties, KEY_INDENT_SIZE));
+		final IndentationSize indentationSize = IndentationSize.parse(
+				findByKey(properties, KEY_INDENT_SIZE),
+				findByKey(properties, KEY_TAB_WIDTH)
+		);
 		final IndentationStyle indentationStyle = IndentationStyle.parse(findByKey(properties, KEY_INDENT_STYLE));
 		final InsertFinalNewlineStyle insertFinalNewlineStyle = InsertFinalNewlineStyle.parse(findByKey(properties, KEY_INSERT_FINAL_NEWLINE));
 		final LineEndingStyle lineEndingStyle = LineEndingStyle.parse(findByKey(properties, KEY_END_OF_LINE));

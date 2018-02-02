@@ -9,20 +9,25 @@ For information on EditorConfig in general, see [their website](http://editorcon
  
 * Checks for
   * Usage of correct Charset
+  * Line ending (CR, LF, CRLF)
+  * File indentation (SPACE, TAB) with defined size
+  * Final newlines
+
+* Missing checks:
+  * Trim trailing whitespace
 
  ## Supported styles 
 
 * Supports configuration inheritance.
 * Supported styles:
   * indent_size
+    * value "tab" means: set the number of spaces to tab_width if available
+      otherwise use IDE default
   * indent_width
   * end_of_line
   * charset
   * trim_trailing_whitespace
   * insert_final_newline
-  
-* Unsupported config keys:
-  * tab_width: This only defines the way code is being displayed, only useful for editors.
   
 
 # License

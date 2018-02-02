@@ -1,6 +1,7 @@
 package eu.b1n4ry.editorconfig.style;
 
 import java.util.Objects;
+import java.util.OptionalInt;
 
 /**
  * Defines the number of indents to be used per indentation level.
@@ -8,9 +9,10 @@ import java.util.Objects;
 public class IndentationSize {
 
 	private static final IndentationSize UNDEFINED = new IndentationSize(-1);
-	private static final IndentationSize TAB = new IndentationSize(-2);
+	private static final IndentationSize DEFAULT = new IndentationSize(1);
 
 	private static final String TAB_IDENTIFIER = "tab";
+	private static final String ERROR_NO_VALID_VALUE = "`%s` is not a valid value for `%%s`. Valid values are (a positive number, tab).";
 
 	private final int size;
 
@@ -21,29 +23,55 @@ public class IndentationSize {
 	/**
 	 * Parses the given value as IndentationSize and returns an interpreted enum.
 	 *
-	 * @param size The config value to parse.
+	 * @param indentation_size The config value to parse.
+	 * @param tab_width        The width of a tab stop. indentation_size defaults to tab_width if given and indentation_size = tab.
 	 * @return The corresponding IndentationSize.
 	 * @throws IllegalArgumentException Throws an exception when neither null, 'tab' nor a number is given.
 	 */
-	public static IndentationSize parse(String size) {
-		if (size == null) {
+	public static IndentationSize parse(String indentation_size, String tab_width) {
+		if (indentation_size == null) {
 			return UNDEFINED;
 		}
 
-		if (TAB_IDENTIFIER.equals(size)) {
-			return TAB;
+		if (TAB_IDENTIFIER.equals(indentation_size)) {
+			return fromTabWidth(tab_width);
 		}
 
-		try {
-			final int sizeInt = Math.abs(Integer.parseInt(size));
-			return new IndentationSize(sizeInt);
-		} catch (NumberFormatException e) {
-			final String error = String.format(
-					"`%s` is not a valid value for `%%s`. Valid values are (a positive number, tab).",
-					size
-			);
-			throw new IllegalArgumentException(error);
+		final OptionalInt sizeAsInt = parseInt(indentation_size);
+
+		if (sizeAsInt.isPresent()) {
+			return new IndentationSize(sizeAsInt.getAsInt());
 		}
+
+		throw new IllegalArgumentException(String.format(ERROR_NO_VALID_VALUE, indentation_size));
+	}
+
+	/**
+	 * Creates an instance of IndentationSize with the value of "tab_width" or 1 if no data can be found.
+	 *
+	 * @param tab_width_string The value to parse.
+	 * @return An instance of IndentationSize.
+	 */
+	private static IndentationSize fromTabWidth(String tab_width_string) {
+		final OptionalInt tab_width = parseInt(tab_width_string);
+
+		if (tab_width.isPresent()) {
+			return new IndentationSize(tab_width.getAsInt());
+		}
+
+		return DEFAULT;
+	}
+
+	private static OptionalInt parseInt(String numeric_string) {
+		try {
+			if (numeric_string != null) {
+				return OptionalInt.of(Math.abs(Integer.valueOf(numeric_string)));
+			}
+		} catch (NumberFormatException e) {
+			// ignore
+		}
+
+		return OptionalInt.empty();
 	}
 
 	/**
@@ -62,15 +90,6 @@ public class IndentationSize {
 	 */
 	public boolean isUndefined() {
 		return UNDEFINED.equals(this);
-	}
-
-	/**
-	 * Checks if the indent_size is set to 'tab'.
-	 *
-	 * @return True if indent_size is set to 'tab', false otherwise.
-	 */
-	public boolean isTab() {
-		return TAB.equals(this);
 	}
 
 	@Override

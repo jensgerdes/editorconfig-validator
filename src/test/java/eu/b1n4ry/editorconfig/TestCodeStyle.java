@@ -42,6 +42,16 @@ public class TestCodeStyle extends CodeStyle {
 			return this;
 		}
 
+		public Builder withIndentationStyle(IndentationStyle indentationStyle) {
+			this.indentationStyle = indentationStyle;
+			return this;
+		}
+
+		public Builder withIndentationSize(IndentationSize indentationSize) {
+			this.indentationSize = indentationSize;
+			return this;
+		}
+
 		public CodeStyle build() {
 
 			return new TestCodeStyle(

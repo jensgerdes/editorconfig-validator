@@ -17,32 +17,51 @@ class IndentationSizeTest {
 	private static final String ILLEGAL_VALUE = "nonsense";
 
 	@Test
-	void whenNumberIsGivenThenUndefinedAndTabIsFalse() {
-		final IndentationSize size = IndentationSize.parse("17");
+	void whenSizeIsGivenThenIndentSizeWithSizeReturned() {
+		final IndentationSize size = IndentationSize.parse("17", null);
 
-		assertThat(size.isTab(), is(false));
 		assertThat(size.isUndefined(), is(false));
 		assertThat(size.getSize(), is(17));
 	}
 
 	@Test
-	void whenNullIsGivenThenUndefinedIsTrue() {
-		final IndentationSize size = IndentationSize.parse(null);
-		assertThat(size.isUndefined(), is(true));
-		assertThat(size.isTab(), is(false));
+	void whenSizeAndTabWidthAreGivenThenTabWidthIsIgnored() {
+		final IndentationSize size = IndentationSize.parse("17", "4");
+
+		assertThat(size.isUndefined(), is(false));
+		assertThat(size.getSize(), is(17));
 	}
 
 	@Test
-	void whenTabIsGivenThenTabIsTrue() {
-		final IndentationSize size = IndentationSize.parse(TAB_IDENTIFIER);
-		assertThat(size.isTab(), is(true));
+	void whenNothingGivenThenUndefinedIsTrue() {
+		final IndentationSize size = IndentationSize.parse(null, null);
+		assertThat(size.isUndefined(), is(true));
+	}
+
+	@Test
+	void whenOnlyTabWidthIsGivenThenUndefinedIsTrue() {
+		final IndentationSize size = IndentationSize.parse(null, "2");
+		assertThat(size.isUndefined(), is(true));
+	}
+
+	@Test
+	void whenTabIsGivenWithoutTabWidthThenIndentSizeIsDefault() {
+		final IndentationSize size = IndentationSize.parse(TAB_IDENTIFIER, null);
 		assertThat(size.isUndefined(), is(false));
+		assertThat(size.getSize(), is(1));
+	}
+
+	@Test
+	void whenTabAndTabWidthAreGivenThenIndentSizeIsTabWidth() {
+		final IndentationSize size = IndentationSize.parse(TAB_IDENTIFIER, "3");
+		assertThat(size.isUndefined(), is(false));
+		assertThat(size.getSize(), is(3));
 	}
 
 	@Test
 	void whenCreatingObjectsWithEqualValuesThenHashCodeAndEqualsReturnTheSame() {
-		final IndentationSize sizeA = IndentationSize.parse(TEST_SIZE);
-		IndentationSize sizeB = IndentationSize.parse(TEST_SIZE);
+		final IndentationSize sizeA = IndentationSize.parse(TEST_SIZE, null);
+		IndentationSize sizeB = IndentationSize.parse(TEST_SIZE, null);
 
 		assertThat(sizeA, is(not(sameInstance(sizeB))));
 		assertThat(sizeA, is(equalTo(sizeB)));
@@ -51,8 +70,8 @@ class IndentationSizeTest {
 
 	@Test
 	void whenCreatingObjectsWithDifferentValuesThenHashCodeAndEqualsReturnDifferenz() {
-		final IndentationSize sizeA = IndentationSize.parse(TEST_SIZE);
-		IndentationSize sizeB = IndentationSize.parse(TAB_IDENTIFIER);
+		final IndentationSize sizeA = IndentationSize.parse(TEST_SIZE, null);
+		IndentationSize sizeB = IndentationSize.parse(TAB_IDENTIFIER, null);
 
 		assertThat(sizeA, is(not(equalTo(sizeB))));
 		assertThat(sizeA.hashCode(), is(not(equalTo(sizeB.hashCode()))));
@@ -60,7 +79,7 @@ class IndentationSizeTest {
 
 	@Test
 	void whenInvalidValueIsGivenThenIllegalArgumentExceptionIsThrown() {
-		final Executable parse = () -> IndentationSize.parse(ILLEGAL_VALUE);
+		final Executable parse = () -> IndentationSize.parse(ILLEGAL_VALUE, null);
 		final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, parse);
 		assertThat(exception.getMessage(), is(equalTo("`nonsense` is not a valid value for `%s`. Valid values are (a positive number, tab).")));
 	}
