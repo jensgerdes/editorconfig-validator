@@ -21,6 +21,11 @@ public class CheckResult implements Serializable {
 		errors = new LinkedList<>();
 	}
 
+	/**
+	 * Returns the result of a number of CodeStyle checks performed on a certain file.
+	 *
+	 * @return True if no errors occurred and no violations have been reported, false otherwise.
+	 */
 	public boolean isSuccessful() {
 		return violations.isEmpty() && errors.isEmpty();
 	}
@@ -29,14 +34,27 @@ public class CheckResult implements Serializable {
 		return Collections.unmodifiableCollection(warnings);
 	}
 
+	/**
+	 * @return An unmodifiable view on the violations of this Check.
+	 */
 	public Collection<String> getViolations() {
 		return Collections.unmodifiableCollection(violations);
 	}
 
+	/**
+	 * @return An unmodifiable view on the errors of this Check.
+	 */
 	public Collection<Exception> getErrors() {
 		return Collections.unmodifiableCollection(errors);
 	}
 
+	/**
+	 * Creates an immutable instance of {@link CheckResult} with a CodeStyle violation.
+	 * A check will report a violation if a file does not comply with a defined CodeStyle.
+	 *
+	 * @param message The message that will be reported to the user.
+	 * @return A new instance of CheckResult.
+	 */
 	public static CheckResult withViolation(String message) {
 		final CheckResult result = new CheckResult();
 		result.violations.add(message);
@@ -44,6 +62,12 @@ public class CheckResult implements Serializable {
 		return result;
 	}
 
+	/**
+	 * Creates an immutable instance of {@link CheckResult} with an Exception that occurred during a check.
+	 *
+	 * @param e The exception that occurred during check.
+	 * @return A new instance of CheckResult.
+	 */
 	public static CheckResult withError(Exception e) {
 		final CheckResult result = new CheckResult();
 		result.errors.add(e);

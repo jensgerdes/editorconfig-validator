@@ -1,11 +1,11 @@
 package eu.b1n4ry.editorconfig.check;
 
+import java.nio.file.Path;
+
 import eu.b1n4ry.editorconfig.CodeStyle;
 import eu.b1n4ry.editorconfig.style.InsertFinalNewlineStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.nio.file.Path;
 
 /**
  * Checks that a given text file has a final new line if required.
@@ -14,9 +14,6 @@ public class FinalNewLineCheck implements CharacterBasedCheck {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FinalNewLineCheck.class);
 	private static final String ERROR_MESSAGE = "File(%s) is missing a final new line.";
-
-	private static final char CR = '\r';
-	private static final char LF = '\n';
 
 	private char lastChar;
 	private InsertFinalNewlineStyle finalNewlineStyle;
@@ -42,7 +39,7 @@ public class FinalNewLineCheck implements CharacterBasedCheck {
 			return CheckResult.SUCCESS;
 		}
 
-		if (lastChar == CR || lastChar == LF) {
+		if (Util.isLineEnding(lastChar)) {
 			return CheckResult.SUCCESS;
 		}
 

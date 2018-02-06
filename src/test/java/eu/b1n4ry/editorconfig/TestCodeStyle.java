@@ -52,6 +52,11 @@ public class TestCodeStyle extends CodeStyle {
 			return this;
 		}
 
+		public Builder withTrimTrailingWhiteSpace(TrimTrailingWhiteSpaceStyle trimTrailingWhiteSpace) {
+			this.trimTrailingWhiteSpaceStyle = trimTrailingWhiteSpace;
+			return this;
+		}
+
 		public CodeStyle build() {
 
 			return new TestCodeStyle(

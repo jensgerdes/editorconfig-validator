@@ -5,9 +5,12 @@ import java.nio.file.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static eu.b1n4ry.editorconfig.check.indentation.Util.isSpace;
-import static eu.b1n4ry.editorconfig.check.indentation.Util.isTab;
+import static eu.b1n4ry.editorconfig.check.Util.isSpace;
+import static eu.b1n4ry.editorconfig.check.Util.isTab;
 
+/**
+ * Checks that a given file uses only tab characters as indentation.
+ */
 public class TabCheck extends AbstractIndentCheck {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TabCheck.class);

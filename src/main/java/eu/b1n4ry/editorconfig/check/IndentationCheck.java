@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Checks that a given class uses the defined indentation style (SPACE, TAB) and size.
+ * Checks that a given file uses the defined indentation style (SPACE, TAB) and size.
  * This class delegates the handling of different styles to its {@link IndentationHelper}s.
  */
 public class IndentationCheck implements CharacterBasedCheck {

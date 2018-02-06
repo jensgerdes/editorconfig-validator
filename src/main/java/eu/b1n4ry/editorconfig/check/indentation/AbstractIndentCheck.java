@@ -6,7 +6,7 @@ import eu.b1n4ry.editorconfig.check.CheckResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static eu.b1n4ry.editorconfig.check.indentation.Util.isLineEnding;
+import static eu.b1n4ry.editorconfig.check.Util.isLineEnding;
 
 abstract class AbstractIndentCheck implements IndentationHelper {
 

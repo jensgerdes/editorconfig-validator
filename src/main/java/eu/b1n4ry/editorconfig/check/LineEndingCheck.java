@@ -1,5 +1,7 @@
 package eu.b1n4ry.editorconfig.check;
 
+import java.nio.file.Path;
+
 import eu.b1n4ry.editorconfig.CodeStyle;
 import eu.b1n4ry.editorconfig.check.lineending.CrCheck;
 import eu.b1n4ry.editorconfig.check.lineending.CrLfCheck;
@@ -9,10 +11,8 @@ import eu.b1n4ry.editorconfig.check.lineending.NoOpCheck;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.file.Path;
-
 /**
- * Checks that a given class uses the defined line ending style (LF, CR or CRLF).
+ * Checks that a given file uses the defined line ending style (LF, CR or CRLF).
  * This class delegates the handling of different Line endings to its {@link LineEndingHelper}s.
  */
 public class LineEndingCheck implements CharacterBasedCheck {

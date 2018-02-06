@@ -7,9 +7,13 @@ import eu.b1n4ry.editorconfig.style.IndentationSize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static eu.b1n4ry.editorconfig.check.indentation.Util.isSpace;
-import static eu.b1n4ry.editorconfig.check.indentation.Util.isTab;
+import static eu.b1n4ry.editorconfig.check.Util.isSpace;
+import static eu.b1n4ry.editorconfig.check.Util.isTab;
 
+/**
+ * Checks that a given file uses only spaces as indentation. If provided with the indentation size it checks for the correct number
+ * of indents, as well.
+ */
 public class SpaceCheck extends AbstractIndentCheck {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SpaceCheck.class);
